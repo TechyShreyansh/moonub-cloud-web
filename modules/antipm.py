@@ -56,8 +56,7 @@ async def anti_pm_handler(client: Client, message: Message):
 This is the Assistant Of {u_n}.</b>
 <i>My Boss is away or busy as of now, You can wait for him to respond.
 Do not spam further messages else I may have to block you!</i>
-
-<br><i>If you want to Talk Then goto @SmartEdith_Bot , Start it and Send your Message.<i></br>
+<i>If you want to Talk Then goto @SmartEdith_Bot , Start it and Send your Message.<i>
 
 <b>This is an automated message by the assistant.</b>
 <b><u>Currently You Have <code>{warns}</code> Warnings.</u></b>
