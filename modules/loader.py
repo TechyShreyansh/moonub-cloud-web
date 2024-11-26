@@ -5,6 +5,15 @@
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation, either version 3 of the License, or
 #  (at your option) any later version.
+
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import hashlib
 import os
 import shutil
@@ -17,14 +26,6 @@ from pyrogram.types import Message
 
 from utils.misc import modules_help, prefix
 from utils.scripts import restart
-
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 BASE_PATH = os.path.abspath(os.getcwd())
@@ -145,7 +146,10 @@ async def unload_mods(_, message: Message):
     if os.path.exists(f"{BASE_PATH}/modules/custom_modules/{module_name}.py"):
         os.remove(f"{BASE_PATH}/modules/custom_modules/{module_name}.py")
         if module_name == "musicbot":
-            subprocess.run([sys.executable, "-m", "pip", "uninstall", "-y", "requirements.txt"], cwd=f"{BASE_PATH}/musicbot")
+            subprocess.run(
+                [sys.executable, "-m", "pip", "uninstall", "-y", "requirements.txt"],
+                cwd=f"{BASE_PATH}/musicbot",
+            )
             shutil.rmtree(f"{BASE_PATH}/musicbot")
         await message.edit(f"<b>The module <code>{module_name}</code> removed!</b>")
         restart()

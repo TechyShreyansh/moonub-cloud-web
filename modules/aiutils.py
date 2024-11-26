@@ -13,10 +13,6 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#  GNU General Public License for more details.
-
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
 
@@ -112,7 +108,9 @@ async def vdxl(c: Client, message: Message):
                         prompt = message.reply_to_message.caption[len(f"{m}") :].strip()
                         image_path = await message.reply_to_message.download()
                         with open(image_path, "rb") as image_file:
-                            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                            image_data = base64.b64encode(image_file.read()).decode(
+                                "utf-8"
+                            )
                         img2img = True
                         model_found = True
                         break
@@ -185,9 +183,13 @@ async def vdxl(c: Client, message: Message):
                 try:
                     details = response["detail"]
                     mes = response["message"]
-                    return await message.edit_text(f"<b>{details}: </b><code>{mes}</code>")
+                    return await message.edit_text(
+                        f"<b>{details}: </b><code>{mes}</code>"
+                    )
                 except KeyError:
-                    return await message.edit_text("An Error Occurred, please try again later")
+                    return await message.edit_text(
+                        "An Error Occurred, please try again later"
+                    )
 
     except MessageTooLong:
         await message.edit_text(
@@ -244,7 +246,9 @@ async def vdxl2(c: Client, message: Message):
                         prompt = message.reply_to_message.caption[len(f"{m}") :].strip()
                         image_path = await message.reply_to_message.download()
                         with open(image_path, "rb") as image_file:
-                            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                            image_data = base64.b64encode(image_file.read()).decode(
+                                "utf-8"
+                            )
                         img2img = True
                         model_found = True
                         break
@@ -317,9 +321,13 @@ async def vdxl2(c: Client, message: Message):
                 try:
                     details = response["detail"]
                     mes = response["message"]
-                    return await message.edit_text(f"<b>{details}: </b><code>{mes}</code>")
+                    return await message.edit_text(
+                        f"<b>{details}: </b><code>{mes}</code>"
+                    )
                 except KeyError:
-                    return await message.edit_text("An Error Occurred, please try again later")
+                    return await message.edit_text(
+                        "An Error Occurred, please try again later"
+                    )
 
     except MessageTooLong:
         await message.edit_text(
@@ -376,7 +384,9 @@ async def vdxl3(c: Client, message: Message):
                         prompt = message.reply_to_message.caption[len(f"{m}") :].strip()
                         image_path = await message.reply_to_message.download()
                         with open(image_path, "rb") as image_file:
-                            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                            image_data = base64.b64encode(image_file.read()).decode(
+                                "utf-8"
+                            )
                         img2img = True
                         model_found = True
                         break
@@ -449,9 +459,13 @@ async def vdxl3(c: Client, message: Message):
                 try:
                     details = response["detail"]
                     mes = response["message"]
-                    return await message.edit_text(f"<b>{details}: </b><code>{mes}</code>")
+                    return await message.edit_text(
+                        f"<b>{details}: </b><code>{mes}</code>"
+                    )
                 except KeyError:
-                    return await message.edit_text("An Error Occurred, please try again later")
+                    return await message.edit_text(
+                        "An Error Occurred, please try again later"
+                    )
 
     except MessageTooLong:
         await message.edit_text(
@@ -508,7 +522,9 @@ async def vfxl(c: Client, message: Message):
                         prompt = message.reply_to_message.caption[len(f"{m}") :].strip()
                         image_path = await message.reply_to_message.download()
                         with open(image_path, "rb") as image_file:
-                            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                            image_data = base64.b64encode(image_file.read()).decode(
+                                "utf-8"
+                            )
                         img2img = True
                         model_found = True
                         break
@@ -585,9 +601,13 @@ async def vfxl(c: Client, message: Message):
                 try:
                     details = response["detail"]
                     mes = response["message"]
-                    return await message.edit_text(f"<b>{details}: </b><code>{mes}</code>")
+                    return await message.edit_text(
+                        f"<b>{details}: </b><code>{mes}</code>"
+                    )
                 except KeyError:
-                    return await message.edit_text("An Error Occurred, please try again later")
+                    return await message.edit_text(
+                        "An Error Occurred, please try again later"
+                    )
 
     except MessageTooLong:
         await message.edit_text(
@@ -644,7 +664,9 @@ async def vpxl(c: Client, message: Message):
                         prompt = message.reply_to_message.caption[len(f"{m}") :].strip()
                         image_path = await message.reply_to_message.download()
                         with open(image_path, "rb") as image_file:
-                            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                            image_data = base64.b64encode(image_file.read()).decode(
+                                "utf-8"
+                            )
                         img2img = True
                         model_found = True
                         break
@@ -721,9 +743,13 @@ async def vpxl(c: Client, message: Message):
                 try:
                     details = response["detail"]
                     mes = response["message"]
-                    return await message.edit_text(f"<b>{details}: </b><code>{mes}</code>")
+                    return await message.edit_text(
+                        f"<b>{details}: </b><code>{mes}</code>"
+                    )
                 except KeyError:
-                    return await message.edit_text("An Error Occurred, please try again later")
+                    return await message.edit_text(
+                        "An Error Occurred, please try again later"
+                    )
 
     except MessageTooLong:
         await message.edit_text(
@@ -780,7 +806,9 @@ async def vpixl(c: Client, message: Message):
                         prompt = message.reply_to_message.caption[len(f"{m}") :].strip()
                         image_path = await message.reply_to_message.download()
                         with open(image_path, "rb") as image_file:
-                            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                            image_data = base64.b64encode(image_file.read()).decode(
+                                "utf-8"
+                            )
                         img2img = True
                         model_found = True
                         break
@@ -916,7 +944,9 @@ async def vkxl(c: Client, message: Message):
                         prompt = message.reply_to_message.caption[len(f"{m}") :].strip()
                         image_path = await message.reply_to_message.download()
                         with open(image_path, "rb") as image_file:
-                            image_data = base64.b64encode(image_file.read()).decode("utf-8")
+                            image_data = base64.b64encode(image_file.read()).decode(
+                                "utf-8"
+                            )
                         img2img = True
                         model_found = True
                         break
@@ -989,9 +1019,13 @@ async def vkxl(c: Client, message: Message):
                 try:
                     details = response["detail"]
                     mes = response["message"]
-                    return await message.edit_text(f"<b>{details}: </b><code>{mes}</code>")
+                    return await message.edit_text(
+                        f"<b>{details}: </b><code>{mes}</code>"
+                    )
                 except KeyError:
-                    return await message.edit_text("An Error Occurred, please try again later")
+                    return await message.edit_text(
+                        "An Error Occurred, please try again later"
+                    )
 
     except MessageTooLong:
         await message.edit_text(

@@ -13,10 +13,6 @@
 #
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#  GNU General Public License for more details.
-
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 from pyrogram import Client, ContinuePropagation, errors, filters
 from pyrogram.types import (
@@ -205,7 +201,7 @@ async def filters_handler(_, message: Message):
     try:
         text = ""
         for index, a in enumerate(get_filters_chat(message.chat.id).items(), start=1):
-            key, item = a
+            key, _ = a
             key = key.replace("<", "").replace(">", "")
             text += f"{index}. <code>{key}</code>\n"
         text = f"<b>Your filters in current chat</b>:\n\n" f"{text}"

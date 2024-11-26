@@ -1,10 +1,26 @@
+#  Moon-Userbot - telegram userbot
+#  Copyright (C) 2020-present Moon Userbot Organization
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import datetime
 import os
 import subprocess
 import time
 
 import aiofiles
-from pyrogram import Client, enums, filters
+from pyrogram import Client, filters
 from pyrogram.errors import MessageTooLong
 from pyrogram.types import Message
 
@@ -19,58 +35,36 @@ async def read_file(file_path):
 
 
 def check_extension(file_path):
-    if file_path.lower().endswith(".txt"):
-        code_start = "```txt"
-    elif file_path.lower().endswith(".py"):
-        code_start = "```py"
-    elif file_path.lower().endswith(".js"):
-        code_start = "```js"
-    elif file_path.lower().endswith(".json"):
-        code_start = "```json"
-    elif file_path.lower().endswith(".smali"):
-        code_start = "```smali"
-    elif file_path.lower().endswith(".sh"):
-        code_start = "```bash"
-    elif file_path.lower().endswith(".c"):
-        code_start = "```C"
-    elif file_path.lower().endswith(".java"):
-        code_start = "```java"
-    elif file_path.lower().endswith(".php"):
-        code_start = "```php"
-    elif file_path.lower().endswith(".doc"):
-        code_start = "```doc"
-    elif file_path.lower().endswith(".docx"):
-        code_start = "```docx"
-    elif file_path.lower().endswith(".rtf"):
-        code_start = "```rtf"
-    elif file_path.lower().endswith(".s"):
-        code_start = "```asm"
-    elif file_path.lower().endswith(".dart"):
-        code_start = "```dart"
-    elif file_path.lower().endswith(".cfg"):
-        code_start = "```cfg"
-    elif file_path.lower().endswith(".swift"):
-        code_start = "```swift"
-    elif file_path.lower().endswith(".cs"):
-        code_start = "```C#"
-    elif file_path.lower().endswith(".vb"):
-        code_start = "```vb"
-    elif file_path.lower().endswith(".css"):
-        code_start = "```css"
-    elif file_path.lower().endswith(".htm") or file_path.lower().endswith(".html"):
-        code_start = "```html"
-    elif file_path.lower().endswith(".rss"):
-        code_start = "```rss"
-    elif file_path.lower().endswith(".swift"):
-        code_start = "```swift"
-    elif file_path.lower().endswith(".xhtml"):
-        code_start = "```xhtml"
-    elif file_path.lower().endswith(".cpp"):
-        code_start = "```cpp"
-    else:
-        code_start = "```"
+    extensions = {
+        ".txt": "<pre lang='plaintext'>",
+        ".py": "<pre lang='python'>",
+        ".js": "<pre lang='javascript'>",
+        ".json": "<pre lang='json'>",
+        ".smali": "<pre lang='smali'>",
+        ".sh": "<pre lang='shell'>",
+        ".c": "<pre lang='c'>",
+        ".java": "<pre lang='java'>",
+        ".php": "<pre lang='php'>",
+        ".doc": "<pre lang='doc'>",
+        ".docx": "<pre lang='docx'>",
+        ".rtf": "<pre lang='rtf'>",
+        ".s": "<pre lang='asm'>",
+        ".dart": "<pre lang='dart'>",
+        ".cfg": "<pre lang='cfg'>",
+        ".swift": "<pre lang='swift'>",
+        ".cs": "<pre lang='csharp'>",
+        ".vb": "<pre lang='vb'>",
+        ".css": "<pre lang='css'>",
+        ".htm": "<pre lang='html'>",
+        ".html": "<pre lang='html'>",
+        ".rss": "<pre lang='xml'>",
+        ".xhtml": "<pre lang='xtml'>",
+        ".cpp": "<pre lang='cpp'>",
+    }
 
-    return code_start
+    ext = os.path.splitext(file_path)[1].lower()
+
+    return extensions.get(ext, "<pre>")
 
 
 @Client.on_message(filters.command("open", prefix) & filters.me)
@@ -79,7 +73,7 @@ async def openfile(client: Client, message: Message):
         return await message.edit_text("Kindly Reply to a File")
 
     try:
-        ms = await edit_or_reply(message, "`Downloading...")
+        ms = await edit_or_reply(message, "<b>Downloading...</b>")
         ct = time.time()
         file_path = await message.reply_to_message.download(
             progress=progress, progress_args=(ms, ct, "Downloading...")
@@ -92,18 +86,16 @@ async def openfile(client: Client, message: Message):
             "%Y-%m-%d %H:%M:%S"
         )
         code_start = check_extension(file_path=file_path)
-        code_end = "```"
         content = await read_file(file_path=file_path)
         await ms.edit_text(
-            f"**File Name:** `{file_name[0]}`\n**Size:** `{file_size} bytes`\n**Last Modified:** `{last_modified}`\n**Content:** {code_start}\n{content}{code_end}",
-            parse_mode=enums.ParseMode.MARKDOWN,
+            f"<b>File Name:</b> <code>{file_name[0]}</code>\n<b>Size:</b> <code>{file_size} bytes</code>\n<b>Last Modified:</b> <code>{last_modified}</code>\n<b>Content:</b> {code_start}{content}</pre>",
         )
 
     except MessageTooLong:
         await ms.edit_text(
             "<code>File Content is too long... Pasting to rentry...</code>"
         )
-        content_new = f"{code_start}\n{content}{code_end}"
+        content_new = f"```{code_start[11:-2]}\n{content}```"
         paste = subprocess.run(
             ["rentry", "new", content_new], capture_output=True, text=True, check=True
         )
@@ -114,8 +106,7 @@ async def openfile(client: Client, message: Message):
             if parts[0].strip() == "Url:":
                 url = "".join(parts[1:]).split()[0]
                 await ms.edit_text(
-                    f"**File Name:** `{file_name[0]}`\n**Size:** `{file_size} bytes`\n**Last Modified:** `{last_modified}`\n**Content:** {url}\n**Note:** `Edit Code has been sent to your saved messages`",
-                    parse_mode=enums.ParseMode.MARKDOWN,
+                    f"<b>File Name:</b> <code>{file_name[0]}</code>\n<b>Size:</b> <code>{file_size} bytes</code>\n<b>Last Modified:</b> <code>{last_modified}</code>\n<b>Content:</b> {url}\n<b>Note:</b> <code>Edit Code has been sent to your saved messages</code>",
                     disable_web_page_preview=True,
                 )
                 break
